@@ -7,10 +7,13 @@ import android.widget.TextView;
 
 import com.estimote.coresdk.cloud.model.Color;
 import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
+import com.estimote.coresdk.observation.region.Region;
+import com.estimote.coresdk.recognition.packets.Beacon;
 import com.estimote.proximitycontent.estimote.BeaconID;
 import com.estimote.proximitycontent.estimote.EstimoteCloudBeaconDetails;
 import com.estimote.proximitycontent.estimote.EstimoteCloudBeaconDetailsFactory;
 import com.estimote.proximitycontent.estimote.ProximityContentManager;
+import com.estimote.coresdk.service.BeaconManager;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         proximityContentManager = new ProximityContentManager(this,
                 Arrays.asList(
                         // TODO: replace with UUIDs, majors and minors of your own beacons
-                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 1, 1),
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 54045, 19267),
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 2, 2),
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 3, 3)),
                 new EstimoteCloudBeaconDetailsFactory());
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 Integer backgroundColor;
                 if (content != null) {
                     EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
-                    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
+                    text = "You're in " + beaconDetails.getBeaconName() + "'s range" + "!";
                     backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
                 } else {
                     text = "No beacons in range.";
@@ -64,6 +67,23 @@ public class MainActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.textView)).setText(text);
                 findViewById(R.id.relativeLayout).setBackgroundColor(
                         backgroundColor != null ? backgroundColor : BACKGROUND_COLOR_NEUTRAL);
+            }
+        });
+
+        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
+            @Override
+            public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
+                if (beacons.size() != 0) {
+                    Beacon beacon = beacons.get(0);
+                    // ...
+                }
+            }
+        });
+
+        beaconManager.setNearableListener(new BeaconManager.NearableListener() {
+            @Override
+            public void onNearablesDiscovered(List<Nearable> nearables) {
+                // ...
             }
         });
     }

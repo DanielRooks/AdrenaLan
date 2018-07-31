@@ -17,7 +17,7 @@ public class MyApplication extends Application {
 
         // TODO: put your App ID and App Token here
         // You can get them by adding your app on https://cloud.estimote.com/#/apps
-        EstimoteSDK.initialize(getApplicationContext(), "<#App ID#>", "<#App Token#>");
+        EstimoteSDK.initialize(getApplicationContext(), "test-app-5v7", "d93308d81149f0620707e4f263ac27da");
 
         // uncomment to enable debug-level logging
         // it's usually only a good idea when troubleshooting issues with the Estimote SDK

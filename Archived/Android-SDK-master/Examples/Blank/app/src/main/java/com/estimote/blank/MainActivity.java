@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
+
 //
 // Running into any issues? Drop us an email to: contact@estimote.com
 //
@@ -53,4 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SystemRequirementsChecker.checkWithDefaultDialogs(this);
+    }
+
 }
